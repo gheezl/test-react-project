@@ -8,7 +8,7 @@ import { sha256 } from '@noble/hashes/sha256';
 
 function App() {
   const [input, setInput] = useState<string>("");
-  const [secret, setSecret] = useState<string>("secret");
+  const [secret, setSecret] = useState<string>("");
   const [hash, setHash] = useState<string>("");
 
   const createHash = (input: string) => {
@@ -17,6 +17,7 @@ function App() {
 
     setHash(bytesToHex(hmac(sha256, secretBytes, messageBytes)));
     setInput("");
+    setSecret("");
   }
 
   return (
@@ -24,7 +25,7 @@ function App() {
       <div className="card">
         <div className="inputAndButtons">
           <Input placeholder='Enter String' value={input} onInput={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)} />
-          <Input placeholder='Enter Secret Key (Optional)' onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSecret(e.target.value)} />
+          <Input placeholder='Enter Secret Key (Optional)' value={secret} onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSecret(e.target.value)} />
           <Button onClick={() => createHash(input)} disabled={!input} >Get Hash</Button>
         </div>
         {
